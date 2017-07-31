@@ -21,7 +21,7 @@
 from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill
 from mycroft.util.log import getLogger
-
+from mycroft.skills.intent_service import IntentParser
 
 __author__ = 'jarbas'
 
@@ -33,35 +33,49 @@ class ParrotSkill(MycroftSkill):
     def __init__(self):
         super(ParrotSkill, self).__init__(name="ParrotSkill")
         self.parroting = False
+        self.parser = None
 
     def initialize(self):
 
         start_parrot_intent = IntentBuilder("StartParrotIntent")\
-            .require("StartParrotKeyword").build()
+            .require("StartKeyword").require("ParrotKeyword").build()
 
         self.register_intent(start_parrot_intent,
                              self.handle_start_parrot_intent)
 
+        stop_parrot_intent = IntentBuilder("StopParrotIntent") \
+            .require("StopKeyword").require("ParrotKeyword").build()
+
+        self.register_intent(stop_parrot_intent,
+                             self.handle_stop_parrot_intent)
+
+        self.parser = IntentParser(self.emitter)
+
     def handle_start_parrot_intent(self, message):
         self.parroting = True
-        self.speak("Parrot Mode Started")
+        self.speak("Parrot Mode Started", expect_response=True)
+
+    def handle_stop_parrot_intent(self, message):
+        self.parroting = False
+        self.speak("Parrot Mode Stopped")
 
     def stop(self):
-        pass
-
-    def Converse(self, transcript, lang="en-us"):
         if self.parroting:
-            if ("parrot stop" or "stop parrot") in transcript[0]:
-                self.parroting = False
-                self.speak("Parrot Mode Stopped")
+            self.parroting = False
+            self.speak("Parrot Mode Stopped")
+
+    def converse(self, utterances, lang="en-us"):
+        if self.parroting:
+            intent, skill_id = self.parser.determine_intent(utterances[0])
+            if skill_id == self.skill_id:
+                return False
             else:
-                self.speak(transcript[0])
-            return True
+                self.speak(utterances[0], expect_response=True)
+                return True
         else:
             return False
 
 
 def create_skill():
     return ParrotSkill()
-
 

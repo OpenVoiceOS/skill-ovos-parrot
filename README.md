@@ -1,11 +1,13 @@
-# mycroft---parrot-skill
-talks back to user like a parrot
+# Parrot Skill
 
-usage:
+Repeat everything back to user, simple demo of converse method
 
-    start parrot - starts repeating everything  back to user
-    stop parrot - stops parrot mode
-    
-warning:
+# usage
 
-    this makes changes to intent skill, main, and core, allows a skill to handle utterances if desired
+    start parrot - Parrot mode started
+
+    hello - hello
+    what - what
+    who are you - who are you
+
+    stop parrot - Parrot mode stopped
