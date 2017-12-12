@@ -15,17 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Mycroft Core.  If not, see <http://www.gnu.org/licenses/>.
 
-
-
-
 from adapt.intent import IntentBuilder
 from mycroft.skills.core import MycroftSkill
-from mycroft.util.log import getLogger
-from mycroft.skills.intent_service import IntentParser
+from os.path import dirname, join
 
 __author__ = 'jarbas'
-
-logger = getLogger(__name__)
 
 
 class ParrotSkill(MycroftSkill):
@@ -33,7 +27,17 @@ class ParrotSkill(MycroftSkill):
     def __init__(self):
         super(ParrotSkill, self).__init__(name="ParrotSkill")
         self.parroting = False
-        self.parser = None
+        self.stop_words = []
+        # load stop words from .voc file
+        # TODO PR for this method
+        path = join(dirname(__file__), "dialog", self.lang, "StopKeyword.voc")
+        with open(path, 'r') as voc_file:
+            for line in voc_file.readlines():
+                parts = line.strip().split("|")
+                entity = parts[0]
+                self.stop_words.append(entity)
+                for alias in parts[1:]:
+                    self.stop_words.append(alias)
 
     def initialize(self):
 
@@ -49,29 +53,28 @@ class ParrotSkill(MycroftSkill):
         self.register_intent(stop_parrot_intent,
                              self.handle_stop_parrot_intent)
 
-        self.parser = IntentParser(self.emitter)
-
     def handle_start_parrot_intent(self, message):
         self.parroting = True
-        self.speak("Parrot Mode Started", expect_response=True)
+        self.speak_dialog("parrot_start", expect_response=True)
 
     def handle_stop_parrot_intent(self, message):
         self.parroting = False
-        self.speak("Parrot Mode Stopped")
+        self.speak_dialog("parrot_stop")
 
     def stop(self):
         if self.parroting:
             self.parroting = False
-            self.speak("Parrot Mode Stopped")
+            self.speak_dialog("parrot_stop")
 
     def converse(self, utterances, lang="en-us"):
         if self.parroting:
-            intent, skill_id = self.parser.determine_intent(utterances[0])
-            if skill_id == self.skill_id:
-                return False
-            else:
-                self.speak(utterances[0], expect_response=True)
-                return True
+            # check if stop intent will trigger
+            for stop in self.stop_words:
+                if stop in utterances[0]:
+                    return False
+            # if not parrot utterance back
+            self.speak(utterances[0], expect_response=True)
+            return True
         else:
             return False
 
