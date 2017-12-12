@@ -16,7 +16,7 @@
 # along with Mycroft Core.  If not, see <http://www.gnu.org/licenses/>.
 
 from adapt.intent import IntentBuilder
-from mycroft.skills.core import MycroftSkill
+from mycroft.skills.core import MycroftSkill, intent_handler
 from os.path import dirname, join
 
 __author__ = 'jarbas'
@@ -39,24 +39,16 @@ class ParrotSkill(MycroftSkill):
                 for alias in parts[1:]:
                     self.stop_words.append(alias)
 
-    def initialize(self):
-
-        start_parrot_intent = IntentBuilder("StartParrotIntent")\
-            .require("StartKeyword").require("ParrotKeyword").build()
-
-        self.register_intent(start_parrot_intent,
-                             self.handle_start_parrot_intent)
-
-        stop_parrot_intent = IntentBuilder("StopParrotIntent") \
-            .require("StopKeyword").require("ParrotKeyword").build()
-
-        self.register_intent(stop_parrot_intent,
-                             self.handle_stop_parrot_intent)
-
+    @intent_handler(
+        IntentBuilder("StartParrotIntent").require("StartKeyword").require(
+            "ParrotKeyword"))
     def handle_start_parrot_intent(self, message):
         self.parroting = True
         self.speak_dialog("parrot_start", expect_response=True)
 
+    @intent_handler(
+        IntentBuilder("StopParrotIntent").require("StopKeyword").require(
+            "ParrotKeyword"))
     def handle_stop_parrot_intent(self, message):
         self.parroting = False
         self.speak_dialog("parrot_stop")
