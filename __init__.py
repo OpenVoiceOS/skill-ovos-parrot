@@ -30,7 +30,7 @@ class ParrotSkill(MycroftSkill):
         self.stop_words = []
         # load stop words from .voc file
         # TODO PR for this method
-        path = join(dirname(__file__), "dialog", self.lang, "StopKeyword.voc")
+        path = join(dirname(__file__), "vocab", self.lang, "StopKeyword.voc")
         with open(path, 'r') as voc_file:
             for line in voc_file.readlines():
                 parts = line.strip().split("|")
