@@ -1,13 +1,24 @@
-# Parrot Skill
+## Parrot
 
-Repeat everything back to user, simple demo of converse method
+Turn Mycroft into a echoing parrot!
 
-# usage
+## Description
 
-    start parrot - Parrot mode started
+    "Hey Mycroft, start parrot"
+    "hello"
+    hello
+    "what"
+    what
+    "who are you"
+    who are you
+    "Stop parrot"
 
-    hello - hello
-    what - what
-    who are you - who are you
+NOTE: This illustrates the converse() method
 
-    stop parrot - Parrot mode stopped
+## Examples
+* "start parrot"
+* "stop parrot"
+
+## Credits
+
+JarbasAI
