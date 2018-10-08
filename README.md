@@ -1,8 +1,7 @@
-## Parrot
+# <img src='https://rawgithub.com/FortAwesome/Font-Awesome/master/advanced-options/raw-svg/solid/crow.svg' card_color='#40DBB0' width='50' height='50' style='vertical-align:bottom'/> Parrot 
+ Turn Mycroft into a echoing parrot!
 
-Turn Mycroft into a echoing parrot!
-
-## Description
+## About 
 
     "Hey Mycroft, start parrot"
     "hello"
@@ -15,10 +14,17 @@ Turn Mycroft into a echoing parrot!
 
 NOTE: This illustrates the converse() method
 
-## Examples
+## Examples 
 * "start parrot"
 * "stop parrot"
 
-## Credits
+## Credits 
+JarbasAl
 
-JarbasAI
+## Category
+**Entertainment**
+
+## Tags
+#parrot
+#converse
+#echo
