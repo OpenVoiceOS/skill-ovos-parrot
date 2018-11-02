@@ -23,6 +23,8 @@ class ParrotSkill(MycroftSkill):
         if self.parroting:
             self.parroting = False
             self.speak_dialog("parrot_stop")
+            return True
+        return False
 
     def converse(self, utterances, lang="en-us"):
         if self.parroting:
