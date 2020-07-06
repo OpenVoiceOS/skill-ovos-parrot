@@ -162,7 +162,15 @@ class ParrotSkill(MycroftSkill):
     # gui
     def update_picture(self, utterance=None):
         if len(self.heard_utts):
-            utterance = utterance or random.choice(self.heard_utts["_all"])
+            if utterance is None:
+                utterance = random.choice(self.heard_utts["_all"])
+                utterance = '"' + utterance + '"'
+                utterance = self.dialog_renderer.render("idle.caption",
+                                                        {"sentence": utterance})
+            else:
+                utterance = '"' + utterance + '"'
+                utterance = self.dialog_renderer.render("human.says",
+                                                        {"sentence": utterance})
         path = join(dirname(__file__), "ui", "parrots")
         pic = join(path, random.choice(listdir(path)))
         self.gui.show_image(pic, caption=utterance,
