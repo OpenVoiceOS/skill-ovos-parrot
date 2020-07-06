@@ -17,7 +17,7 @@ class ParrotSkill(MycroftSkill):
         self.last_stt_time = {"_all": 0}
 
     def initialize(self):
-        # events used in intents directly lifted from
+        # events used in intents rom
         # https://github.com/MatthewScholefield/skill-repeat-recent
         self.add_event('recognizer_loop:utterance', self.on_utterance)
         self.add_event('speak', self.on_speak)
@@ -90,15 +90,14 @@ class ParrotSkill(MycroftSkill):
     # Intents
     @intent_file_handler("speak.intent")
     def handle_speak(self, message):
-        """
-            Repeat the utterance back to the user
-        """
+        # replaces https://github.com/MycroftAI/skill-speak
         repeat = message.data.get("sentence", "").strip()
         self.update_picture(repeat)
         self.speak(repeat, wait=True)
 
     @intent_file_handler('repeat.tts.intent')
     def handle_repeat_tts(self, message):
+        # replaces https://github.com/MatthewScholefield/skill-repeat-recent
         sources = message.context.get("destination", ["broadcast"])
         if isinstance(sources, str):
             sources = [sources]
@@ -117,6 +116,7 @@ class ParrotSkill(MycroftSkill):
 
     @intent_file_handler('repeat.stt.intent')
     def handle_repeat_stt(self, message):
+        # replaces https://github.com/MatthewScholefield/skill-repeat-recent
         sources = message.context.get("destination", ["broadcast"])
         if isinstance(sources, str):
             sources = [sources]
@@ -136,6 +136,7 @@ class ParrotSkill(MycroftSkill):
 
     @intent_file_handler('did.you.hear.me.intent')
     def handle_did_you_hear_me(self, message):
+        # replaces https://github.com/MatthewScholefield/skill-repeat-recent
         sources = message.context.get("destination", ["broadcast"])
         if isinstance(sources, str):
             sources = [sources]
@@ -158,19 +159,6 @@ class ParrotSkill(MycroftSkill):
             self.speak_dialog('repeat.stt', {"stt": last_stt})
             self.update_picture(last_stt)
 
-    @intent_file_handler("start_parrot.intent")
-    def handle_start_parrot_intent(self, message):
-        self.parroting = True
-        self.speak_dialog("parrot_start", expect_response=True)
-
-    @intent_file_handler("stop_parrot.intent")
-    def handle_stop_parrot_intent(self, message):
-        if self.parroting:
-            self.parroting = False
-            self.speak_dialog("parrot_stop")
-        else:
-            self.speak_dialog("not_parroting")
-
     # gui
     def update_picture(self, utterance=None):
         if len(self.heard_utts):
@@ -185,6 +173,19 @@ class ParrotSkill(MycroftSkill):
         self.update_picture()
 
     # continuous conversation
+    @intent_file_handler("start_parrot.intent")
+    def handle_start_parrot_intent(self, message):
+        self.parroting = True
+        self.speak_dialog("parrot_start", expect_response=True)
+
+    @intent_file_handler("stop_parrot.intent")
+    def handle_stop_parrot_intent(self, message):
+        if self.parroting:
+            self.parroting = False
+            self.speak_dialog("parrot_stop")
+        else:
+            self.speak_dialog("not_parroting")
+
     def converse(self, utterances, lang="en-us"):
         if self.parroting:
             # check if stop intent will trigger
