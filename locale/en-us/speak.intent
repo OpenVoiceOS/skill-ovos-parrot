@@ -1,0 +1,2 @@
+(say|repeat|speak|say after me) {{sentence}}
+(say|repeat|speak) {{sentence}} after me

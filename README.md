@@ -17,6 +17,8 @@ Turn Mycroft into a echoing parrot!
 
 NOTE: This illustrates the converse() method
 
+NOTE2: This will blacklist and replace official mycroft-speak skill, see [PR#8](https://github.com/MycroftAI/skill-speak/pull/8)
+
 ## Examples 
 * "start parrot"
 * "stop parrot"
