@@ -57,19 +57,35 @@ class ParrotSkill(MycroftSkill):
             config.store()
 
     def on_utterance(self, message):
+        ts =  monotonic()
         source = message.context.get("source", "broadcast")
         if source not in self.heard_utts:
             self.heard_utts[source] = []
+
         self.heard_utts[source] += message.data['utterances']
         self.heard_utts["_all"] += message.data['utterances']
-        self.last_stt_time[source] = monotonic()
-        self.last_stt_time["_all"] = monotonic()
+        self.last_stt_time[source] = self.last_stt_time["_all"] = ts
+
+        if source == "broadcast":
+            for s in self.heard_utts:
+                if s == source:
+                    continue
+                self.heard_utts[s] += message.data['utterances']
+            for s in self.last_stt_time:
+                if s == source:
+                    continue
+                self.last_tts[s] = ts
 
     def on_speak(self, message):
         source = message.context.get("destination", "broadcast")
         if source not in self.last_tts:
             self.last_tts[source] = []
         self.last_tts[source] = message.data['utterance']
+        if source == "broadcast":
+            for s in self.last_tts:
+                if s == source:
+                    continue
+                self.last_tts[s] += message.data['utterances']
 
     # Intents
     @intent_file_handler("speak.intent")
@@ -155,7 +171,7 @@ class ParrotSkill(MycroftSkill):
     # gui
     def update_picture(self, utterance=None):
         if len(self.heard_utts):
-            utterance = utterance or random.choice(self.heard_utts)
+            utterance = utterance or random.choice(self.heard_utts["_all"])
         path = join(dirname(__file__), "ui", "parrots")
         pic = join(path, random.choice(listdir(path)))
         self.gui.show_image(pic, caption=utterance,
