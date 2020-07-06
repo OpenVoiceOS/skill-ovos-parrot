@@ -20,6 +20,10 @@ NOTE: This illustrates the converse() method
 NOTE2: This will blacklist and replace official mycroft-speak skill, see [PR#8](https://github.com/MycroftAI/skill-speak/pull/8)
 
 ## Examples 
+
+* "say Goodnight, Gracie"
+* "repeat Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten lore"
+* "speak I can say anything you'd like!"
 * "start parrot"
 * "stop parrot"
 
