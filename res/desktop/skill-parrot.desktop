@@ -1,0 +1,10 @@
+[Desktop Entry]
+Terminal=false
+Type=Application
+Name=Parrot
+Exec=mycroft-gui-app --hideTextInput --skill=skill-parrot.jarbasskills.home
+Icon=icon.png
+Categories=VoiceApp
+StartupNotify=false
+X-DBUS-StartupType=None
+X-KDE-StartupNotify=false
