@@ -3,7 +3,7 @@ from os.path import join, dirname
 from os import listdir
 from mycroft.skills.core import resting_screen_handler
 import random
-from jarbas_utils.configuration import blacklist_skill
+from mycroft.configuration import LocalConf, USER_CONFIG
 from mycroft.messagebus import Message
 
 
@@ -15,11 +15,24 @@ class ParrotSkill(MycroftSkill):
 
     def initialize(self):
         # Deactivate official skill
-        self.log.info("Parrot skill is blacklisting official speak skill "
-                      "from mycroft")
-        self.bus.emit(Message('skillmanager.deactivate',
-                              {"skill": "mycroft-speak.mycroftai"}))
-        blacklist_skill("mycroft-speak.mycroftai")
+        # TODO depending on https://github.com/MycroftAI/skill-speak/issues/24
+        # the full initialize method can be removed
+        self.log.info("Parrot skill blacklisted official speak skill from mycroft")
+
+        skill = "mycroft-speak.mycroftai"
+        self.bus.emit(Message('skillmanager.deactivate', {"skill": skill}))
+
+        skills_config = self.config_core.get("skills", {})
+        blacklisted_skills = skills_config.get("blacklisted_skills", [])
+        if skill not in blacklisted_skills:
+            blacklisted_skills.append(skill)
+            config = LocalConf(USER_CONFIG)
+            if "skills" not in config:
+                config["skills"] = {}
+            if "blacklisted_skills" not in config["skills"]:
+                config["skills"]["blacklisted_skills"] = []
+            config["skills"]["blacklisted_skills"] += blacklisted_skills
+            config.store()
 
     @intent_file_handler("speak.intent")
     def handle_speak(self, message):
