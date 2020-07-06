@@ -1,4 +1,4 @@
-# <img src='icon.png`' card_color='#40DBB0' width='50' height='50' style='vertical-align:bottom'/> Parrot 
+# <img src='./icon.png' card_color='#40DBB0' width='50' height='50' style='vertical-align:bottom'/> Parrot 
 
 Turn Mycroft into a echoing parrot!
 
