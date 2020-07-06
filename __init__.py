@@ -85,7 +85,7 @@ class ParrotSkill(MycroftSkill):
             for s in self.last_tts:
                 if s == source:
                     continue
-                self.last_tts[s] += message.data['utterances']
+                self.last_tts[s] = message.data['utterance']
 
     # Intents
     @intent_file_handler("speak.intent")
