@@ -80,7 +80,7 @@ class ParrotSkill(MycroftSkill):
         source = message.context.get("destination", "broadcast")
         if source not in self.last_tts:
             self.last_tts[source] = []
-        self.last_tts[source] = message.data['utterance']
+        self.last_tts[source] = self.last_tts["_all"] = message.data['utterance']
         if source == "broadcast":
             for s in self.last_tts:
                 if s == source:
