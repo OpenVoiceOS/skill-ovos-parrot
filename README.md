@@ -4,7 +4,12 @@ Turn Mycroft into a echoing parrot!
 
 ![](./gui.png)
 
+Make Mycroft repeat whatever you want
+
+
 ## About 
+
+Turn Mycroft into a parrot. Speak a phrase and listen to it repeated in Mycroft's selected voice.
 
     "Hey Mycroft, start parrot"
     "hello"
