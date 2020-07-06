@@ -20,9 +20,7 @@ Turn Mycroft into a parrot. Speak a phrase and listen to it repeated in Mycroft'
     who are you
     "Stop parrot"
 
-NOTE: This illustrates the converse() method
-
-NOTE2: This will blacklist and replace official mycroft-speak skill, see [PR#8](https://github.com/MycroftAI/skill-speak/pull/8)
+NOTE: This will blacklist and replace official mycroft-speak skill, see [Issue#24](https://github.com/MycroftAI/skill-speak/issues/24)
 
 ## Examples 
 
