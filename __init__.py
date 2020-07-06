@@ -12,9 +12,9 @@ class ParrotSkill(MycroftSkill):
     def __init__(self):
         super(ParrotSkill, self).__init__("ParrotSkill")
         self.parroting = False
-        self.heard_utts = []
-        self.last_tts = None
-        self.last_stt_time = 0
+        self.heard_utts = {"_all": []}
+        self.last_tts = {"_all": []}
+        self.last_stt_time = {"_all": 0}
 
     def initialize(self):
         # events used in intents directly lifted from
@@ -57,11 +57,19 @@ class ParrotSkill(MycroftSkill):
             config.store()
 
     def on_utterance(self, message):
-        self.heard_utts += message.data['utterances']
-        self.last_stt_time = monotonic()
+        source = message.context.get("source", "broadcast")
+        if source not in self.heard_utts:
+            self.heard_utts[source] = []
+        self.heard_utts[source] += message.data['utterances']
+        self.heard_utts["_all"] += message.data['utterances']
+        self.last_stt_time[source] = monotonic()
+        self.last_stt_time["_all"] = monotonic()
 
     def on_speak(self, message):
-        self.last_tts = message.data['utterance']
+        source = message.context.get("destination", "broadcast")
+        if source not in self.last_tts:
+            self.last_tts[source] = []
+        self.last_tts[source] = message.data['utterance']
 
     # Intents
     @intent_file_handler("speak.intent")
@@ -74,31 +82,60 @@ class ParrotSkill(MycroftSkill):
         self.speak(repeat, wait=True)
 
     @intent_file_handler('repeat.tts.intent')
-    def handle_repeat_tts(self):
+    def handle_repeat_tts(self, message):
+        sources = message.context.get("destination", ["broadcast"])
+        if isinstance(sources, str):
+            sources = [sources]
+        utts = []
+        for source in sources:
+            utt = self.last_tts.get(source)
+            if utt:
+                utts.append(utt)
+        if len(utts) < 1:
+            last_tts = self.translate('nothing')
+        else:
+            last_tts = utts[-1] # last is current utt
         self.speak_dialog('repeat.tts',
-                          {"tts":self.last_tts})
+                          {"tts":last_tts})
 
     @intent_file_handler('repeat.stt.intent')
-    def handle_repeat_stt(self):
-        if len(self.heard_utts) < 1:
+    def handle_repeat_stt(self, message):
+        sources = message.context.get("destination", ["broadcast"])
+        if isinstance(sources, str):
+            sources = [sources]
+        utts = []
+        for source in sources:
+            utts += self.heard_utts.get(source, [])
+        ts = max([self.last_stt_time.get(source, 0) for source in sources])
+        if len(utts) < 2:
             last_stt = self.translate('nothing')
         else:
-            last_stt = self.heard_utts[-2] # last is current utt
-        if monotonic() - self.last_stt_time > 120:
+            last_stt = utts[-2] # last is current utt
+        if monotonic() - ts > 120:
             self.speak_dialog('repeat.stt.old', {"stt": last_stt})
         else:
             self.speak_dialog('repeat.stt', {"stt": last_stt})
 
     @intent_file_handler('did.you.hear.me.intent')
-    def handle_did_you_hear_me(self):
-        if monotonic() - self.last_stt_time > 60 or len(self.heard_utts) == 0:
+    def handle_did_you_hear_me(self, message):
+        sources = message.context.get("destination", ["broadcast"])
+        if isinstance(sources, str):
+            sources = [sources]
+        ts = max([self.last_stt_time.get(source, 0) for source in sources])
+
+        if monotonic() - ts > 60 or len(self.heard_utts) == 0:
             self.speak_dialog('did.not.hear')
             self.speak_dialog('please.repeat', expect_response=True)
         else:
-            if len(self.heard_utts) < 1:
+            utts = []
+            for source in sources:
+                utts += self.heard_utts.get(source, [])
+
+            if len(utts) < 2:
                 last_stt = self.translate('nothing')
             else:
-                last_stt = self.heard_utts[-2] # last is current utt
+                last_stt = utts[-2]  # last is current utt
+
             self.speak_dialog('did.hear')
             self.speak_dialog('repeat.stt', {"stt": last_stt})
 
