@@ -113,6 +113,7 @@ class ParrotSkill(MycroftSkill):
             last_tts = utts[-1] # last is current utt
         self.speak_dialog('repeat.tts',
                           {"tts":last_tts})
+        self.update_picture(last_tts)
 
     @intent_file_handler('repeat.stt.intent')
     def handle_repeat_stt(self, message):
@@ -131,6 +132,7 @@ class ParrotSkill(MycroftSkill):
             self.speak_dialog('repeat.stt.old', {"stt": last_stt})
         else:
             self.speak_dialog('repeat.stt', {"stt": last_stt})
+        self.update_picture(last_stt)
 
     @intent_file_handler('did.you.hear.me.intent')
     def handle_did_you_hear_me(self, message):
@@ -154,6 +156,7 @@ class ParrotSkill(MycroftSkill):
 
             self.speak_dialog('did.hear')
             self.speak_dialog('repeat.stt', {"stt": last_stt})
+            self.update_picture(last_stt)
 
     @intent_file_handler("start_parrot.intent")
     def handle_start_parrot_intent(self, message):
