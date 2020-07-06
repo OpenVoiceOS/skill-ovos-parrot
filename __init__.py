@@ -74,7 +74,7 @@ class ParrotSkill(MycroftSkill):
             for s in self.last_stt_time:
                 if s == source:
                     continue
-                self.last_tts[s] = ts
+                self.last_stt_time[s] = ts
 
     def on_speak(self, message):
         source = message.context.get("destination", "broadcast")
