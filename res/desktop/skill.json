@@ -16,9 +16,6 @@
     "ia64"
   ],
   "examples": [
-    "say Goodnight, Gracie",
-    "repeat Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten lore",
-    "speak I can say anything you'd like!",
     "start parrot",
     "repeat everything you hear",
     "stop repeating me",
@@ -27,6 +24,9 @@
     "Repeat that",
     "Can you repeat that?",
     "What did I just say?",
-    "Tell me what I just said."
+    "Tell me what I just said.",
+    "say Goodnight, Gracie",
+    "repeat Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten lore",
+    "speak I can say anything you'd like!"
   ]
 }

@@ -24,8 +24,8 @@ Turn Mycroft into a parrot. Speak a phrase and listen to it repeated in Mycroft'
 Also provides an idle screen with parrot images and a random previous STT transcription
 
 NOTES: 
-- This will blacklist and replace [MycroftAI/skill-speak](https://github.com/MycroftAI/skill-speak), see [Issue#24](https://github.com/MycroftAI/skill-speak/issues/24)
-- This will blacklist and replace [MatthewScholefield/skill-repeat-recent](https://github.com/MatthewScholefield/skill-repeat-recent)
+- This will blacklist and replace the functionality of [MycroftAI/skill-speak](https://github.com/MycroftAI/skill-speak), see [Issue#24](https://github.com/MycroftAI/skill-speak/issues/24)
+- This will blacklist and replace the functionality of [MatthewScholefield/skill-repeat-recent](https://github.com/MatthewScholefield/skill-repeat-recent)
 - When asking to repeat what was previously said source is taken into consideration, if you ask in cli, gui, hivemind or STT response will vary accordingly, ie. using voice satellite wont respond with STT from device, only same source is taken into consideration
 - Previous transcriptions are not persisted to disk
 
@@ -55,3 +55,4 @@ NOTES:
 #echo
 #Template
 #Tutorial
+#Debug
