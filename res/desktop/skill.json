@@ -22,6 +22,11 @@
     "start parrot",
     "repeat everything you hear",
     "stop repeating me",
-    "stop parrot"
+    "stop parrot",
+    "Repeat what you just said",
+    "Repeat that",
+    "Can you repeat that?",
+    "What did I just say?",
+    "Tell me what I just said."
   ]
 }
