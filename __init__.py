@@ -24,7 +24,8 @@ class ParrotSkill(MycroftSkill):
 
         # check for conflicting skills just in case
         # done after all skills loaded to ensure proper shutdown
-        self.add_event("mycroft.skills.initialized", self.deactivate_deprecated)
+        self.add_event("mycroft.skills.initialized",
+                       self.deactivate_deprecated)
 
     def get_intro_message(self):
         # blacklist conflicting skills on install
@@ -38,7 +39,8 @@ class ParrotSkill(MycroftSkill):
         skills_config = self.config_core.get("skills", {})
         blacklisted_skills = skills_config.get("blacklisted_skills", [])
         config = LocalConf(USER_CONFIG)
-        blacklisted_skills += config.get("skills", {}).get("blacklisted_skills", [])
+        blacklisted_skills += config.get("skills", {}).get(
+            "blacklisted_skills", [])
         store = False
         for skill in ["skill-repeat-recent", "mycroft-speak.mycroftai"]:
             if skill not in blacklisted_skills:
@@ -57,7 +59,7 @@ class ParrotSkill(MycroftSkill):
             config.store()
 
     def on_utterance(self, message):
-        ts =  monotonic()
+        ts = monotonic()
         source = message.context.get("source", "broadcast")
         if source not in self.heard_utts:
             self.heard_utts[source] = []
@@ -80,7 +82,8 @@ class ParrotSkill(MycroftSkill):
         source = message.context.get("destination", "broadcast")
         if source not in self.last_tts:
             self.last_tts[source] = []
-        self.last_tts[source] = self.last_tts["_all"] = message.data['utterance']
+        self.last_tts[source] = self.last_tts["_all"] = message.data[
+            'utterance']
         if source == "broadcast":
             for s in self.last_tts:
                 if s == source:
@@ -109,9 +112,9 @@ class ParrotSkill(MycroftSkill):
         if len(utts) < 1:
             last_tts = self.translate('nothing')
         else:
-            last_tts = utts[-1] # last is current utt
+            last_tts = utts[-1]  # last is current utt
         self.speak_dialog('repeat.tts',
-                          {"tts":last_tts})
+                          {"tts": last_tts})
         self.update_picture(last_tts)
 
     @intent_file_handler('repeat.stt.intent')
@@ -127,7 +130,7 @@ class ParrotSkill(MycroftSkill):
         if len(utts) < 2:
             last_stt = self.translate('nothing')
         else:
-            last_stt = utts[-2] # last is current utt
+            last_stt = utts[-2]  # last is current utt
         if monotonic() - ts > 120:
             self.speak_dialog('repeat.stt.old', {"stt": last_stt})
         else:
@@ -161,16 +164,19 @@ class ParrotSkill(MycroftSkill):
 
     # gui
     def update_picture(self, utterance=None):
-        if len(self.heard_utts):
-            if utterance is None:
+        if utterance is None:
+            if len(self.heard_utts["_all"]):
                 utterance = random.choice(self.heard_utts["_all"])
                 utterance = '"' + utterance + '"'
-                utterance = self.dialog_renderer.render("idle.caption",
-                                                        {"sentence": utterance})
+                utterance = self.dialog_renderer.render(
+                    "idle.caption", {"sentence": utterance})
             else:
-                utterance = '"' + utterance + '"'
-                utterance = self.dialog_renderer.render("human.says",
-                                                        {"sentence": utterance})
+                utterance = self.dialog_renderer.render(
+                    "no.utterances.caption", {"sentence": utterance})
+        else:
+            utterance = '"' + utterance + '"'
+            utterance = self.dialog_renderer.render("human.says.caption",
+                                                    {"sentence": utterance})
         path = join(dirname(__file__), "ui", "parrots")
         pic = join(path, random.choice(listdir(path)))
         self.gui.show_image(pic, caption=utterance,
@@ -217,4 +223,3 @@ class ParrotSkill(MycroftSkill):
 
 def create_skill():
     return ParrotSkill()
-
