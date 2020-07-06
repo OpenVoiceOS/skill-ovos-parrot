@@ -3,6 +3,7 @@
 Turn Mycroft into a echoing parrot!
 
 ![](./gui.png)
+![](./idle.png)
 
 Make Mycroft repeat whatever you want
 
