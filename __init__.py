@@ -198,12 +198,9 @@ class ParrotSkill(MycroftSkill):
     @intent_file_handler("stop_parrot.intent")
     def handle_stop_parrot_intent(self, message):
         if self.parroting:
-            self.parroting = False
-            self.speak_dialog("parrot_stop")
+            self.stop()
         else:
             self.speak_dialog("not_parroting")
-        self.gui["running"] = False
-        self.gui.release()
 
     def converse(self, utterances, lang="en-us"):
         if self.parroting:
