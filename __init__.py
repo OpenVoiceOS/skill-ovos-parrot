@@ -191,6 +191,9 @@ class ParrotSkill(MycroftSkill):
     def handle_start_parrot_intent(self, message):
         self.parroting = True
         self.speak_dialog("parrot_start", expect_response=True)
+        self.gui["running"] = False
+        self.gui.show_page("parrot.qml", override_idle=True)
+
 
     @intent_file_handler("stop_parrot.intent")
     def handle_stop_parrot_intent(self, message):
@@ -199,6 +202,8 @@ class ParrotSkill(MycroftSkill):
             self.speak_dialog("parrot_stop")
         else:
             self.speak_dialog("not_parroting")
+        self.gui["running"] = False
+        self.gui.release()
 
     def converse(self, utterances, lang="en-us"):
         if self.parroting:
@@ -207,7 +212,6 @@ class ParrotSkill(MycroftSkill):
                     self.voc_match(utterances[0], "ParrotKeyword"):
                 return False
             # if not parrot utterance back
-            self.update_picture(utterances[0])
             self.speak(utterances[0], expect_response=True)
             return True
         else:
@@ -217,6 +221,8 @@ class ParrotSkill(MycroftSkill):
         if self.parroting:
             self.parroting = False
             self.speak_dialog("parrot_stop")
+            self.gui["running"] = False
+            self.gui.release()
             return True
         return False
 
