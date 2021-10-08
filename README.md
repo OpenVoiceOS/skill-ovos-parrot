@@ -1,17 +1,14 @@
-# <img src='./icon.png' card_color='#40DBB0' width='50' height='50' style='vertical-align:bottom'/> Parrot 
+# <img src='./icon.png' card_color='#40DBB0' width='50' height='50' style='vertical-align:bottom'/> Parrot
 
 Turn Mycroft into a echoing parrot!
-
-![](./gui.png)
-![](./idle.png)
 
 Make Mycroft repeat whatever you want
 
 Repeats recent audio transriptions and text to speech outputs
 
-## About 
+## About
 
-Turn Mycroft into a parrot. Speak a phrase and listen to it repeated in Mycroft's selected voice.
+Turn Mycroft into a parrot. Speak a phrase and listen to it repeated in Mycroft's voice.
 
     "Hey Mycroft, start parrot"
     "hello"
@@ -22,18 +19,27 @@ Turn Mycroft into a parrot. Speak a phrase and listen to it repeated in Mycroft'
     who are you
     "Stop parrot"
 
-Also provides an idle screen with parrot images and a random previous STT transcription
+Also provides an idle screen with parrot images and a random previous STT
+transcription
 
-NOTES: 
-- This will blacklist and replace the functionality of [MycroftAI/skill-speak](https://github.com/MycroftAI/skill-speak), see [Issue#24](https://github.com/MycroftAI/skill-speak/issues/24)
-- This will blacklist and replace the functionality of [MatthewScholefield/skill-repeat-recent](https://github.com/MatthewScholefield/skill-repeat-recent)
-- When asking to repeat what was previously said source is taken into consideration, if you ask in cli, gui, hivemind or STT response will vary accordingly, ie. using voice satellite wont respond with STT from device, only same source is taken into consideration
+NOTES:
+
+- This will blacklist and replace the functionality
+  of [MycroftAI/skill-speak](https://github.com/MycroftAI/skill-speak),
+  see [Issue#24](https://github.com/MycroftAI/skill-speak/issues/24)
+- This will blacklist and replace the functionality
+  of [MatthewScholefield/skill-repeat-recent](https://github.com/MatthewScholefield/skill-repeat-recent)
+- When asking to repeat what was previously said source is taken into
+  consideration, if you ask in cli, gui, hivemind or STT response will vary
+  accordingly, ie. using voice satellite wont respond with STT from device,
+  only same source is taken into consideration
 - Previous transcriptions are not persisted to disk
 
-## Examples 
+## Examples
 
 * "say Goodnight, Gracie"
-* "repeat Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten lore"
+* "repeat Once upon a midnight dreary, while I pondered, weak and weary, Over
+  many a quaint and curious volume of forgotten lore"
 * "speak I can say anything you'd like!"
 * "Repeat what you just said"
 * "Repeat that"
@@ -65,19 +71,25 @@ NOTES:
 - `tag` - link to github release / branch / commit
 - `version` - link to release/commit of platform repo where this was tested
 
+## Credits
 
-
-## Credits 
 - JarbasAl
 - [MatthewScholefield/skill-repeat-recent](https://github.com/MatthewScholefield/skill-repeat-recent)
 
 ## Category
+
 **Entertainment**
 
 ## Tags
-#parrot
-#converse
-#echo
-#Template
-#Tutorial
-#Debug
+
+# parrot
+
+# converse
+
+# echo
+
+# Template
+
+# Tutorial
+
+# Debug

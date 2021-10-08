@@ -1,11 +1,5 @@
-from mycroft.skills.core import MycroftSkill, intent_file_handler
-from os.path import join, dirname
-from os import listdir
-from mycroft.skills.core import resting_screen_handler
-import random
-from mycroft.configuration import LocalConf, USER_CONFIG
-from mycroft.messagebus import Message
 from monotonic import monotonic
+from mycroft.skills.core import MycroftSkill, intent_file_handler
 
 
 class ParrotSkill(MycroftSkill):
@@ -22,80 +16,49 @@ class ParrotSkill(MycroftSkill):
         self.add_event('recognizer_loop:utterance', self.on_utterance)
         self.add_event('speak', self.on_speak)
 
-        # check for conflicting skills just in case
-        # done after all skills loaded to ensure proper shutdown
-        self.add_event("mycroft.skills.initialized",
-                       self.deactivate_deprecated)
-
-    def get_intro_message(self):
-        # blacklist conflicting skills on install
-        self.deactivate_deprecated()
-
-    def deactivate_deprecated(self, message=None):
-        # Deactivate official skill
-        # TODO depending on https://github.com/MycroftAI/skill-speak/issues/24
-        # code bellow can be removed
-
-        skills_config = self.config_core.get("skills", {})
-        blacklisted_skills = skills_config.get("blacklisted_skills", [])
-        config = LocalConf(USER_CONFIG)
-        blacklisted_skills += config.get("skills", {}).get(
-            "blacklisted_skills", [])
-        store = False
-        for skill in ["skill-repeat-recent", "mycroft-speak.mycroftai"]:
-            if skill not in blacklisted_skills:
-                self.log.info(
-                    "Parrot skill blacklisted conflicting skill " + skill)
-                self.bus.emit(
-                    Message('skillmanager.deactivate', {"skill": skill}))
-                blacklisted_skills.append(skill)
-                if "skills" not in config:
-                    config["skills"] = {}
-                if "blacklisted_skills" not in config["skills"]:
-                    config["skills"]["blacklisted_skills"] = []
-                config["skills"]["blacklisted_skills"] += blacklisted_skills
-                store = True
-        if store:
-            config.store()
-
     def on_utterance(self, message):
         ts = monotonic()
-        source = message.context.get("source", "broadcast")
-        if source not in self.heard_utts:
-            self.heard_utts[source] = []
+        sources = message.context.get("source", "broadcast")
+        if isinstance(sources, str):
+            sources = [sources]
 
-        self.heard_utts[source] += message.data['utterances']
-        self.heard_utts["_all"] += message.data['utterances']
-        self.last_stt_time[source] = self.last_stt_time["_all"] = ts
-
-        if source == "broadcast":
-            for s in self.heard_utts:
-                if s == source:
-                    continue
-                self.heard_utts[s] += message.data['utterances']
-            for s in self.last_stt_time:
-                if s == source:
-                    continue
-                self.last_stt_time[s] = ts
+        for source in sources:
+            if source not in self.heard_utts:
+                self.heard_utts[source] = []
+            self.heard_utts[source] += message.data['utterances']
+            self.heard_utts["_all"] += message.data['utterances']
+            self.last_stt_time[source] = self.last_stt_time["_all"] = ts
+            #self.log.info(f"{source} utterance: {message.data['utterances']}")
+            if source == "broadcast":
+                for s in self.heard_utts:
+                    if s == source:
+                        continue
+                    self.heard_utts[s] += message.data['utterances']
+                for s in self.last_stt_time:
+                    if s == source:
+                        continue
+                    self.last_stt_time[s] = ts
 
     def on_speak(self, message):
-        source = message.context.get("destination", "broadcast")
-        if source not in self.last_tts:
-            self.last_tts[source] = []
-        self.last_tts[source] = self.last_tts["_all"] = message.data[
-            'utterance']
-        if source == "broadcast":
-            for s in self.last_tts:
-                if s == source:
-                    continue
-                self.last_tts[s] = message.data['utterance']
+        sources = message.context.get("destination", "broadcast")
+        if isinstance(sources, str):
+            sources = [sources]
+        for source in sources:
+            if source not in self.last_tts:
+                self.last_tts[source] = ""
+            self.last_tts[source] = self.last_tts["_all"] = message.data['utterance']
+            #self.log.info(f"{source} speak: {message.data['utterance']}")
+            if source == "broadcast":
+                for s in self.last_tts:
+                    if s == source:
+                        continue
+                    self.last_tts[s] = message.data['utterance']
 
     # Intents
     @intent_file_handler("speak.intent")
     def handle_speak(self, message):
         # replaces https://github.com/MycroftAI/skill-speak
         repeat = message.data.get("sentence", "").strip()
-        self.update_picture(repeat)
         self.speak(repeat, wait=True)
 
     @intent_file_handler('repeat.tts.intent')
@@ -115,7 +78,6 @@ class ParrotSkill(MycroftSkill):
             last_tts = utts[-1]  # last is current utt
         self.speak_dialog('repeat.tts',
                           {"tts": last_tts})
-        self.update_picture(last_tts)
 
     @intent_file_handler('repeat.stt.intent')
     def handle_repeat_stt(self, message):
@@ -126,7 +88,7 @@ class ParrotSkill(MycroftSkill):
         utts = []
         for source in sources:
             utts += self.heard_utts.get(source, [])
-        ts = max([self.last_stt_time.get(source, 0) for source in sources])
+        ts = max([self.last_stt_time.get(source) or 0 for source in sources])
         if len(utts) < 2:
             last_stt = self.translate('nothing')
         else:
@@ -135,7 +97,6 @@ class ParrotSkill(MycroftSkill):
             self.speak_dialog('repeat.stt.old', {"stt": last_stt})
         else:
             self.speak_dialog('repeat.stt', {"stt": last_stt})
-        self.update_picture(last_stt)
 
     @intent_file_handler('did.you.hear.me.intent')
     def handle_did_you_hear_me(self, message):
@@ -160,31 +121,6 @@ class ParrotSkill(MycroftSkill):
 
             self.speak_dialog('did.hear')
             self.speak_dialog('repeat.stt', {"stt": last_stt})
-            self.update_picture(last_stt)
-
-    # gui
-    def update_picture(self, utterance=None):
-        if utterance is None:
-            if len(self.heard_utts["_all"]):
-                utterance = random.choice(self.heard_utts["_all"])
-                utterance = '"' + utterance + '"'
-                utterance = self.dialog_renderer.render(
-                    "idle.caption", {"sentence": utterance})
-            else:
-                utterance = self.dialog_renderer.render(
-                    "no.utterances.caption", {"sentence": utterance})
-        else:
-            utterance = '"' + utterance + '"'
-            utterance = self.dialog_renderer.render("human.says.caption",
-                                                    {"sentence": utterance})
-        path = join(dirname(__file__), "ui", "parrots")
-        pic = join(path, random.choice(listdir(path)))
-        self.gui.show_image(pic, caption=utterance,
-                            fill='PreserveAspectFit')
-
-    @resting_screen_handler("Parrots")
-    def idle(self):
-        self.update_picture()
 
     # continuous conversation
     @intent_file_handler("start_parrot.intent")
@@ -193,7 +129,6 @@ class ParrotSkill(MycroftSkill):
         self.speak_dialog("parrot_start", expect_response=True)
         self.gui["running"] = False
         self.gui.show_page("parrot.qml", override_idle=True)
-
 
     @intent_file_handler("stop_parrot.intent")
     def handle_stop_parrot_intent(self, message):

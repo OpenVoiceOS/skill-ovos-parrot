@@ -2,283 +2,295 @@
 <html lang='en' class=''>
 
 <head>
-<style class="INLINE_PEN_STYLESHEET_ID">
-    :root {
-  --body-color: #F73219;
-  --wing-yellow: #F2D207;
-  --wing-blue: #0372C3;
-  --accent-red: #D12B19;
-}
+    <style class="INLINE_PEN_STYLESHEET_ID">
+        :root {
+            --body-color: #F73219;
+            --wing-yellow: #F2D207;
+            --wing-blue: #0372C3;
+            --accent-red: #D12B19;
+        }
 
-html, body{
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    background-image: url("nature.jpg");
-    background-size: cover;
-}
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background-image: url("nature.jpg");
+            background-size: cover;
+        }
 
-.box-canvas{
-  position: relative;
-  margin: auto;
-  display: block;
-  margin-top: 8%;
-  margin-bottom: 8%;
-  width: 190px;
-  height:600px;
-}
+        .box-canvas {
+            position: relative;
+            margin: auto;
+            display: block;
+            margin-top: 8%;
+            margin-bottom: 8%;
+            width: 190px;
+            height: 600px;
+        }
 
-.head {
-  position: absolute;
-  left: 50px;
-  width: 75px;
-  height: 75px;
-  background: var(--body-color);
-  border-radius: 50%;
-  border: 1px solid var(--body-color);
-  overflow: hidden;
-}
+        .head {
+            position: absolute;
+            left: 50px;
+            width: 75px;
+            height: 75px;
+            background: var(--body-color);
+            border-radius: 50%;
+            border: 1px solid var(--body-color);
+            overflow: hidden;
+        }
 
-/* White section */
-.head::before {
-  content: '';
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background: white;
-  border-radius: 50% 50% 50% 20%;
-  bottom: 10px;
-}
+        /* White section */
+        .head::before {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50% 50% 50% 20%;
+            bottom: 10px;
+        }
 
-@keyframes eyeanim {
-  from   {height: 5px;}
-  to {height: 4px;}
-}
+        @keyframes eyeanim {
+            from {
+                height: 5px;
+            }
+            to {
+                height: 4px;
+            }
+        }
 
-/* Eye */
-.head::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 15px;
-  height: 5px;
-  width: 5px;
-  background: white;
-  border: 7px solid black;
-  border-radius: 50%;
-  animation-name: eyeanim;
-  animation-duration: 1s;
-  animation-direction: alternate;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-play-state: running;
-}
+        /* Eye */
+        .head::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 15px;
+            height: 5px;
+            width: 5px;
+            background: white;
+            border: 7px solid black;
+            border-radius: 50%;
+            animation-name: eyeanim;
+            animation-duration: 1s;
+            animation-direction: alternate;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            animation-play-state: running;
+        }
 
-@keyframes beakanimin {
-  from   {height: 30px;}
-  to {height: 40px;}
-}
+        @keyframes beakanimin {
+            from {
+                height: 30px;
+            }
+            to {
+                height: 40px;
+            }
+        }
 
-.beak {
-  position: absolute;
-  transform: rotate(-25deg);
-  top: 40px;
-  height: 30px;
-  width: 60px;
-  animation-name: beakanimin;
-  animation-duration: 0.75s;
-  animation-direction: alternate;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-play-state: paused;
-}
+        .beak {
+            position: absolute;
+            transform: rotate(-25deg);
+            top: 40px;
+            height: 30px;
+            width: 60px;
+            animation-name: beakanimin;
+            animation-duration: 0.75s;
+            animation-direction: alternate;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            animation-play-state: paused;
+        }
 
-/* Bottom beak */
-.beak::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 5px;
-  background: orange;
-  width: 30px;
-  height: 15px;
-  border-radius: 50% 0% 50% 50%;
-}
+        /* Bottom beak */
+        .beak::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 5px;
+            background: orange;
+            width: 30px;
+            height: 15px;
+            border-radius: 50% 0% 50% 50%;
+        }
 
-.beak-top {
-  position: absolute;
-  right: 0;
-  background: var(--wing-yellow);
-  width: 40px;
-  height: 25px;
-  border-radius: 50% 30% 50% 50%;
-  
-}
+        .beak-top {
+            position: absolute;
+            right: 0;
+            background: var(--wing-yellow);
+            width: 40px;
+            height: 25px;
+            border-radius: 50% 30% 50% 50%;
 
-/* Point of beak */
-.beak-top::after {
-  content: '';
-  position: absolute;
-  top: 22px;
-  left: 5px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  box-shadow: -15px -15px 0 var(--wing-yellow);
-  transform: rotate(20deg);
-}
+        }
 
-.body {
-  position: absolute;
-  left: 70px;
-  top: 55px;
-  background: var(--body-color);
-  height: 150px;
-  width: 80px;
-  border-radius: 50% / 40%;
-  transform: rotate(-25deg);
-  border-left: 2px solid var(--accent-red);
-}
+        /* Point of beak */
+        .beak-top::after {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: 5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            box-shadow: -15px -15px 0 var(--wing-yellow);
+            transform: rotate(20deg);
+        }
 
-@keyframes winganim {
-  from   {transform: skew(0deg, -20deg) rotate(-10deg);}
-  to {transform: skew(0deg, -20deg) rotate(-20deg);}
-}
+        .body {
+            position: absolute;
+            left: 70px;
+            top: 55px;
+            background: var(--body-color);
+            height: 150px;
+            width: 80px;
+            border-radius: 50% / 40%;
+            transform: rotate(-25deg);
+            border-left: 2px solid var(--accent-red);
+        }
 
-/* Wing */
-.body::after {
-  content: '';
-  position: absolute;
-  left: 25px;
-  width: 60px;
-  height: 130px;
-  border-left: 2px solid var(--accent-red);
-  background: linear-gradient(to bottom,
-    var(--body-color),
-    var(--body-color) 50%,
-    var(--wing-yellow) 55%,
-    var(--wing-yellow) 70%,
-    var(--wing-blue) 80%
-  );
-  border-radius: 50% 30% 50% 10%;
-  transform: skew(0deg, -20deg) rotate(-10deg);
-  animation-name: winganim;
-  animation-duration: 1s;
-  animation-direction: alternate;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-play-state: running;
-}
+        @keyframes winganim {
+            from {
+                transform: skew(0deg, -20deg) rotate(-10deg);
+            }
+            to {
+                transform: skew(0deg, -20deg) rotate(-20deg);
+            }
+        }
 
-.tail {
-  content: '';
-  position: absolute;
-  right: 10px;
-  top: 150px;
-  width: 40px;
-  height: 140px;
-  background: blue;
-  background: linear-gradient(to right,
-    var(--wing-blue),
-    var(--wing-blue) 6px,
-    var(--body-color) 10px,
-    var(--body-color) 16px,
-    var(--wing-yellow) 20px,
-    var(--wing-yellow) 26px,
-    var(--wing-blue) 30px
-  );
-  transform: rotate(-20deg);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 60%);
-}
+        /* Wing */
+        .body::after {
+            content: '';
+            position: absolute;
+            left: 25px;
+            width: 60px;
+            height: 130px;
+            border-left: 2px solid var(--accent-red);
+            background: linear-gradient(to bottom,
+            var(--body-color),
+            var(--body-color) 50%,
+            var(--wing-yellow) 55%,
+            var(--wing-yellow) 70%,
+            var(--wing-blue) 80%
+            );
+            border-radius: 50% 30% 50% 10%;
+            transform: skew(0deg, -20deg) rotate(-10deg);
+            animation-name: winganim;
+            animation-duration: 1s;
+            animation-direction: alternate;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: infinite;
+            animation-play-state: running;
+        }
 
-.leg.right {
-  transform: rotate(10deg);
-  top: 200px;
-  left: 110px;
-}
+        .tail {
+            content: '';
+            position: absolute;
+            right: 10px;
+            top: 150px;
+            width: 40px;
+            height: 140px;
+            background: blue;
+            background: linear-gradient(to right,
+            var(--wing-blue),
+            var(--wing-blue) 6px,
+            var(--body-color) 10px,
+            var(--body-color) 16px,
+            var(--wing-yellow) 20px,
+            var(--wing-yellow) 26px,
+            var(--wing-blue) 30px
+            );
+            transform: rotate(-20deg);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 60%);
+        }
 
-.leg.left {
-  transform: rotate(10deg);
-  top: 190px;
-  left: 90px;
-}
+        .leg.right {
+            transform: rotate(10deg);
+            top: 200px;
+            left: 110px;
+        }
 
-.leg {
-  position: absolute;
-  width: 8px;
-  height: 35px;
-  background: var(--wing-yellow);
-}
+        .leg.left {
+            transform: rotate(10deg);
+            top: 190px;
+            left: 90px;
+        }
 
-.leg::after {
-  content: '';
-  position: absolute;
-  left: -10px;
-  top: -10px;
-  width: 28px;
-  height: 20px;
-  background: var(--body-color);
-  clip-path: polygon(20% 100%, 80% 100%, 100% 0, 0 0);
-}
+        .leg {
+            position: absolute;
+            width: 8px;
+            height: 35px;
+            background: var(--wing-yellow);
+        }
 
-.leg.left::after {
-  height: 30px;
-  top: -20px;
-}
+        .leg::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            width: 28px;
+            height: 20px;
+            background: var(--body-color);
+            clip-path: polygon(20% 100%, 80% 100%, 100% 0, 0 0);
+        }
 
-.leg::before {
-  content: '';
-  position: absolute;
-  top: 40px;
-  left: -10px;
-  width: 30px;
-  height: 20px;
-  border-radius: 50%;
-  box-shadow: 0 -8px 0 var(--wing-yellow);
-}
+        .leg.left::after {
+            height: 30px;
+            top: -20px;
+        }
 
-.branch {
-  position: absolute;
-  top: 232px;
-  left: 30px;
-  transform: rotate(40deg);
-  background: #7E4E2D;
-  width: 155px;
-  height: 20px;
-  border-radius: 25% / 35%;
-}
-</style>
+        .leg::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: -10px;
+            width: 30px;
+            height: 20px;
+            border-radius: 50%;
+            box-shadow: 0 -8px 0 var(--wing-yellow);
+        }
 
-<script>
-function startTalking(){
-    var ele1 = document.getElementById("bk1");
-    var ele2 = document.getElementById("tl1");
-    ele1.style.webkitAnimationPlayState = "running";
-}
+        .branch {
+            position: absolute;
+            top: 232px;
+            left: 30px;
+            transform: rotate(40deg);
+            background: #7E4E2D;
+            width: 155px;
+            height: 20px;
+            border-radius: 25% / 35%;
+        }
+    </style>
 
-function stopTalking(){
-    var ele1 = document.getElementById("bk1");
-    ele1.style.webkitAnimationPlayState = "paused";
-    ele1.style.animation = 'none';
-    ele1.offsetHeight;
-    ele1.style.animation = null;
-}
-</script>
+    <script>
+        function startTalking() {
+            var ele1 = document.getElementById("bk1");
+            var ele2 = document.getElementById("tl1");
+            ele1.style.webkitAnimationPlayState = "running";
+        }
+
+        function stopTalking() {
+            var ele1 = document.getElementById("bk1");
+            ele1.style.webkitAnimationPlayState = "paused";
+            ele1.style.animation = 'none';
+            ele1.offsetHeight;
+            ele1.style.animation = null;
+        }
+    </script>
 </head>
 
 <body>
-  <div class="box-canvas">
+<div class="box-canvas">
     <div class="branch"></div>
     <div class="leg left"></div>
     <div class="tail"></div>
     <div id="tl1" class="body" onclick="startTalking()"></div>
     <div class="head" onclick="stopTalking()"></div>
     <div id="bk1" class="beak">
-      <div class="beak-top"></div>
+        <div class="beak-top"></div>
     </div>
     <div class="leg right"></div>
-  </div>
+</div>
 </body>
 
 </html> 
