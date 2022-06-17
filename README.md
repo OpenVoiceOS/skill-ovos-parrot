@@ -26,7 +26,7 @@ NOTES:
   of [MatthewScholefield/skill-repeat-recent](https://github.com/MatthewScholefield/skill-repeat-recent)
 - When asking to repeat what was previously said source is taken into
   consideration, if you ask in cli, gui, hivemind or STT response will vary
-  accordingly, ie. using voice satellite wont respond with STT from device,
+  accordingly, ie. using voice satellite wont respond with a previous STT from another device,
   only same source is taken into consideration
 - Previous transcriptions are not persisted to disk
 
