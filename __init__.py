@@ -31,7 +31,9 @@ class ParrotSkill(MycroftSkill):
         self.add_event('recognizer_loop:utterance', self.on_utterance)
         self.add_event('speak', self.on_speak)
 
-    def get_session(self, message):
+    def get_session(self, message=None):
+        message = message or dig_for_message()
+        
         # use context session id, or fallback to utterance source (client id)
         # utterance source may be a list
         # see https://github.com/OpenVoiceOS/ovos-core/pull/160
@@ -115,9 +117,7 @@ class ParrotSkill(MycroftSkill):
         else:
             self.speak_dialog("not_parroting")
 
-    def converse(self, utterances, lang="en-us"):
-        # TODO message from kwargs
-        message = dig_for_message()
+    def converse(self, utterances, lang="en-us", message=None):
         sess = self.get_session(message)
         if sess.parroting:
             # check if stop intent will trigger
@@ -131,8 +131,7 @@ class ParrotSkill(MycroftSkill):
             return False
 
     def stop(self):
-        message = dig_for_message()
-        sess = self.get_session(message)
+        sess = self.get_session()
         if sess.parroting:
             sess.parroting = False
             self.speak_dialog("parrot_stop")
