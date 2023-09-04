@@ -1,10 +1,28 @@
-from monotonic import monotonic
-from mycroft.skills.core import MycroftSkill, intent_file_handler
+from time import monotonic
 
+from ovos_utils import classproperty
+from ovos_utils.process_utils import RuntimeRequirements
+from ovos_workshop.decorators import intent_handler
+from ovos_workshop.skills import OVOSSkill
 
-class ParrotSkill(MycroftSkill):
-    def __init__(self):
-        super(ParrotSkill, self).__init__("ParrotSkill")
+class ParrotSkill(OVOSSkill):
+
+    @classproperty
+    def runtime_requirements(self):
+        return RuntimeRequirements(
+            internet_before_load=False,
+            network_before_load=False,
+            gui_before_load=False,
+            requires_internet=False,
+            requires_network=False,
+            requires_gui=False,
+            no_internet_fallback=True,
+            no_network_fallback=True,
+            no_gui_fallback=True
+            )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.parroting = False
         self.heard_utts = {"_all": []}
         self.last_tts = {"_all": []}
@@ -55,13 +73,13 @@ class ParrotSkill(MycroftSkill):
                     self.last_tts[s] = message.data['utterance']
 
     # Intents
-    @intent_file_handler("speak.intent")
+    @intent_handler("speak.intent")
     def handle_speak(self, message):
         # replaces https://github.com/MycroftAI/skill-speak
         repeat = message.data.get("sentence", "").strip()
         self.speak(repeat, wait=True)
 
-    @intent_file_handler('repeat.tts.intent')
+    @intent_handler('repeat.tts.intent')
     def handle_repeat_tts(self, message):
         # replaces https://github.com/MatthewScholefield/skill-repeat-recent
         sources = message.context.get("destination", ["broadcast"])
@@ -79,7 +97,7 @@ class ParrotSkill(MycroftSkill):
         self.speak_dialog('repeat.tts',
                           {"tts": last_tts})
 
-    @intent_file_handler('repeat.stt.intent')
+    @intent_handler('repeat.stt.intent')
     def handle_repeat_stt(self, message):
         # replaces https://github.com/MatthewScholefield/skill-repeat-recent
         sources = message.context.get("destination", ["broadcast"])
@@ -98,7 +116,7 @@ class ParrotSkill(MycroftSkill):
         else:
             self.speak_dialog('repeat.stt', {"stt": last_stt})
 
-    @intent_file_handler('did.you.hear.me.intent')
+    @intent_handler('did.you.hear.me.intent')
     def handle_did_you_hear_me(self, message):
         # replaces https://github.com/MatthewScholefield/skill-repeat-recent
         sources = message.context.get("destination", ["broadcast"])
@@ -123,14 +141,14 @@ class ParrotSkill(MycroftSkill):
             self.speak_dialog('repeat.stt', {"stt": last_stt})
 
     # continuous conversation
-    @intent_file_handler("start_parrot.intent")
+    @intent_handler("start_parrot.intent")
     def handle_start_parrot_intent(self, message):
         self.parroting = True
         self.speak_dialog("parrot_start", expect_response=True)
         self.gui["running"] = False
         self.gui.show_page("parrot.qml", override_idle=True)
 
-    @intent_file_handler("stop_parrot.intent")
+    @intent_handler("stop_parrot.intent")
     def handle_stop_parrot_intent(self, message):
         if self.parroting:
             self.stop()
@@ -157,7 +175,3 @@ class ParrotSkill(MycroftSkill):
             self.gui.release()
             return True
         return False
-
-
-def create_skill():
-    return ParrotSkill()
