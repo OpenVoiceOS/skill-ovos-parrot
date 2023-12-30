@@ -142,14 +142,22 @@ class ParrotSkill(OVOSSkill):
             return True
         return False
 
+    def handle_deactivate(self, message):
+        """
+        Called when this skill is no longer considered active by the intent
+        service; converse method will not be called until skill is active again.
+        """
+        sess = SessionManager.get(message)
+        self.stop_session(sess)
+
     def stop_session(self, session: Session):
         if session.session_id in self.parrot_sessions and\
                 self.parrot_sessions[session.session_id]["parrot"]:
             self.parrot_sessions[session.session_id]["parrot"] = False
             self.speak_dialog("parrot_stop")
-        if session.session_id == "default":
-            self.gui["running"] = False
-            self.gui.release()
+            if session.session_id == "default":
+                self.gui["running"] = False
+                self.gui.release()
 
     def stop(self):
         sess = SessionManager.get()
