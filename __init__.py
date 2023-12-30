@@ -132,13 +132,13 @@ class ParrotSkill(OVOSSkill):
         sess = SessionManager.get(message)
         if sess.session_id in self.parrot_sessions and \
                 self.parrot_sessions[sess.session_id]["parrot"]:
-            # check if stop intent will trigger
+
+            # check if stop intent
             if self.voc_match(utterances[0], "StopKeyword") and \
                     self.voc_match(utterances[0], "ParrotKeyword"):
                 self.handle_stop_parrot_intent(message)
-                return True
-            # if not parrot utterance back
-            self.speak(utterances[0])
+            else:  # else parrot utterance back
+                self.speak(utterances[0])
             return True
         return False
 
