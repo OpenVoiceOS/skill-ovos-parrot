@@ -2,6 +2,8 @@
 import os
 from setuptools import setup
 from os import walk, path
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
+
 
 URL = "https://github.com/OpenVoiceOS/skill-ovos-parrot"
 SKILL_CLAZZ = "ParrotSkill"  # needs to match __init__.py class name
@@ -56,6 +58,17 @@ def get_version():
     return version
 
 
+def required(requirements_file):
+    """ Read requirements file and remove comments and empty lines. """
+    with open(os.path.join(BASEDIR, requirements_file), 'r') as f:
+        requirements = f.read().splitlines()
+        if 'MYCROFT_LOOSE_REQUIREMENTS' in os.environ:
+            print('USING LOOSE REQUIREMENTS!')
+            requirements = [r.replace('==', '>=').replace('~=', '>=') for r in requirements]
+        return [pkg for pkg in requirements
+                if pkg.strip() and not pkg.startswith("#")]
+
+
 setup(
     name=PYPI_NAME,
     version=get_version(),
@@ -69,6 +82,7 @@ setup(
     package_data={SKILL_PKG: find_resource_files()},
     packages=[SKILL_PKG],
     include_package_data=True,
+    install_requires=required("requirements.txt"),
     keywords='ovos skill plugin',
     entry_points={'ovos.plugin.skill': PLUGIN_ENTRY_POINT}
 )
