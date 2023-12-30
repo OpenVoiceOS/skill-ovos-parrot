@@ -122,7 +122,7 @@ class ParrotSkill(OVOSSkill):
         sess = SessionManager.get(message)
         if sess.session_id in self.parrot_sessions and \
                 self.parrot_sessions[sess.session_id]["parrot"]:
-            self.stop()
+            self.stop_session(sess)
         else:
             self.speak_dialog("not_parroting")
 
@@ -142,8 +142,10 @@ class ParrotSkill(OVOSSkill):
         return False
 
     def stop_session(self, session: Session):
-        if session.session_id in self.parrot_sessions:
+        if session.session_id in self.parrot_sessions and\
+                self.parrot_sessions[session.session_id]["parrot"]:
             self.parrot_sessions[session.session_id]["parrot"] = False
+            self.speak_dialog("parrot_stop")
         if session.session_id == "default":
             self.gui["running"] = False
             self.gui.release()
@@ -153,6 +155,5 @@ class ParrotSkill(OVOSSkill):
         if sess.session_id in self.parrot_sessions and \
                 self.parrot_sessions[sess.session_id]["parrot"]:
             self.stop_session(sess)
-            self.speak_dialog("parrot_stop")
             return True
         return False
