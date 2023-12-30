@@ -112,18 +112,17 @@ class ParrotSkill(OVOSSkill):
                                                      "stt_timestamp": -1}
 
         self.parrot_sessions[sess.session_id]["parrot"] = True
-        self.speak_dialog("parrot_start")
+        self.speak_dialog("parrot_start", expect_response=True)
         if sess.session_id == "default":
             self.gui["running"] = True
             self.gui.show_page("parrot.qml", override_idle=True)
-            # TODO - enable hybrid listening mode while parrot is on
 
     @intent_handler("stop_parrot.intent")
     def handle_stop_parrot_intent(self, message):
         sess = SessionManager.get(message)
         if sess.session_id in self.parrot_sessions and \
                 self.parrot_sessions[sess.session_id]["parrot"]:
-            self.stop_session(sess)
+            self.stop()
         else:
             self.speak_dialog("not_parroting")
 
@@ -132,37 +131,28 @@ class ParrotSkill(OVOSSkill):
         sess = SessionManager.get(message)
         if sess.session_id in self.parrot_sessions and \
                 self.parrot_sessions[sess.session_id]["parrot"]:
-
-            # check if stop intent
+            # check if stop intent will trigger
             if self.voc_match(utterances[0], "StopKeyword") and \
                     self.voc_match(utterances[0], "ParrotKeyword"):
                 self.handle_stop_parrot_intent(message)
-            else:  # else parrot utterance back
-                self.speak(utterances[0])
+                return True
+            # if not parrot utterance back
+            self.speak(utterances[0], expect_response=True)
             return True
         return False
 
-    def handle_deactivate(self, message):
-        """
-        Called when this skill is no longer considered active by the intent
-        service; converse method will not be called until skill is active again.
-        """
-        sess = SessionManager.get(message)
-        self.stop_session(sess)
-
     def stop_session(self, session: Session):
-        if session.session_id in self.parrot_sessions and\
-                self.parrot_sessions[session.session_id]["parrot"]:
+        if session.session_id in self.parrot_sessions:
             self.parrot_sessions[session.session_id]["parrot"] = False
-            self.speak_dialog("parrot_stop")
-            if session.session_id == "default":
-                self.gui["running"] = False
-                self.gui.release()
+        if session.session_id == "default":
+            self.gui["running"] = False
+            self.gui.release()
 
     def stop(self):
         sess = SessionManager.get()
         if sess.session_id in self.parrot_sessions and \
                 self.parrot_sessions[sess.session_id]["parrot"]:
             self.stop_session(sess)
+            self.speak_dialog("parrot_stop")
             return True
         return False
