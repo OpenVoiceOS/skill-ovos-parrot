@@ -1,9 +1,11 @@
 from time import monotonic
 
+from ovos_bus_client.session import SessionManager, Session
 from ovos_utils import classproperty
 from ovos_utils.process_utils import RuntimeRequirements
 from ovos_workshop.decorators import intent_handler
 from ovos_workshop.skills import OVOSSkill
+
 
 class ParrotSkill(OVOSSkill):
 
@@ -19,58 +21,37 @@ class ParrotSkill(OVOSSkill):
             no_internet_fallback=True,
             no_network_fallback=True,
             no_gui_fallback=True
-            )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.parroting = False
-        self.heard_utts = {"_all": []}
-        self.last_tts = {"_all": []}
-        self.last_stt_time = {"_all": 0}
+        )
 
     def initialize(self):
-        # events used in intents rom
+        self.parrot_sessions = {}
+        # events used in intents from
         # https://github.com/MatthewScholefield/skill-repeat-recent
         self.add_event('recognizer_loop:utterance', self.on_utterance)
         self.add_event('speak', self.on_speak)
 
     def on_utterance(self, message):
-        ts = monotonic()
-        sources = message.context.get("source", "broadcast")
-        if isinstance(sources, str):
-            sources = [sources]
-
-        for source in sources:
-            if source not in self.heard_utts:
-                self.heard_utts[source] = []
-            self.heard_utts[source] += message.data['utterances']
-            self.heard_utts["_all"] += message.data['utterances']
-            self.last_stt_time[source] = self.last_stt_time["_all"] = ts
-            #self.log.info(f"{source} utterance: {message.data['utterances']}")
-            if source == "broadcast":
-                for s in self.heard_utts:
-                    if s == source:
-                        continue
-                    self.heard_utts[s] += message.data['utterances']
-                for s in self.last_stt_time:
-                    if s == source:
-                        continue
-                    self.last_stt_time[s] = ts
+        utt = message.data['utterances'][0]
+        sess = SessionManager.get(message)
+        if sess.session_id not in self.parrot_sessions:
+            self.parrot_sessions[sess.session_id] = {"current_stt": "",
+                                                     "parrot": False,
+                                                     "tts_timestamp": -1,
+                                                     "stt_timestamp": -1}
+        self.parrot_sessions[sess.session_id]["prev_stt"] = self.parrot_sessions[sess.session_id]["current_stt"]
+        self.parrot_sessions[sess.session_id]["current_stt"] = utt
+        self.parrot_sessions[sess.session_id]["stt_timestamp"] = monotonic()
 
     def on_speak(self, message):
-        sources = message.context.get("destination", "broadcast")
-        if isinstance(sources, str):
-            sources = [sources]
-        for source in sources:
-            if source not in self.last_tts:
-                self.last_tts[source] = ""
-            self.last_tts[source] = self.last_tts["_all"] = message.data['utterance']
-            #self.log.info(f"{source} speak: {message.data['utterance']}")
-            if source == "broadcast":
-                for s in self.last_tts:
-                    if s == source:
-                        continue
-                    self.last_tts[s] = message.data['utterance']
+        utt = message.data['utterance']
+        sess = SessionManager.get(message)
+        if sess.session_id not in self.parrot_sessions:
+            self.parrot_sessions[sess.session_id] = {"current_stt": "",
+                                                     "parrot": False,
+                                                     "tts_timestamp": -1,
+                                                     "stt_timestamp": -1}
+        self.parrot_sessions[sess.session_id]["prev_tts"] = utt
+        self.parrot_sessions[sess.session_id]["tts_timestamp"] = monotonic()
 
     # Intents
     @intent_handler("speak.intent")
@@ -82,96 +63,106 @@ class ParrotSkill(OVOSSkill):
     @intent_handler('repeat.tts.intent')
     def handle_repeat_tts(self, message):
         # replaces https://github.com/MatthewScholefield/skill-repeat-recent
-        sources = message.context.get("destination", ["broadcast"])
-        if isinstance(sources, str):
-            sources = [sources]
-        utts = []
-        for source in sources:
-            utt = self.last_tts.get(source)
-            if utt:
-                utts.append(utt)
-        if len(utts) < 1:
-            last_tts = self.translate('nothing')
+        sess = SessionManager.get(message)
+        if sess.session_id not in self.parrot_sessions:
+            utt = self.translate('nothing')
         else:
-            last_tts = utts[-1]  # last is current utt
-        self.speak_dialog('repeat.tts',
-                          {"tts": last_tts})
+            utt = self.parrot_sessions[sess.session_id]["prev_tts"]
+
+        self.speak_dialog('repeat.tts', {"tts": utt})
 
     @intent_handler('repeat.stt.intent')
     def handle_repeat_stt(self, message):
         # replaces https://github.com/MatthewScholefield/skill-repeat-recent
-        sources = message.context.get("destination", ["broadcast"])
-        if isinstance(sources, str):
-            sources = [sources]
-        utts = []
-        for source in sources:
-            utts += self.heard_utts.get(source, [])
-        ts = max([self.last_stt_time.get(source) or 0 for source in sources])
-        if len(utts) < 2:
-            last_stt = self.translate('nothing')
+        sess = SessionManager.get(message)
+        if sess.session_id not in self.parrot_sessions:
+            utt = self.translate('nothing')
+            ts = 0
         else:
-            last_stt = utts[-2]  # last is current utt
+            utt = self.parrot_sessions[sess.session_id]["prev_stt"]
+            ts = self.parrot_sessions[sess.session_id]["stt_timestamp"]
+
         if monotonic() - ts > 120:
-            self.speak_dialog('repeat.stt.old', {"stt": last_stt})
+            self.speak_dialog('repeat.stt.old', {"stt": utt})
         else:
-            self.speak_dialog('repeat.stt', {"stt": last_stt})
+            self.speak_dialog('repeat.stt', {"stt": utt})
 
     @intent_handler('did.you.hear.me.intent')
     def handle_did_you_hear_me(self, message):
         # replaces https://github.com/MatthewScholefield/skill-repeat-recent
-        sources = message.context.get("destination", ["broadcast"])
-        if isinstance(sources, str):
-            sources = [sources]
-        ts = max([self.last_stt_time.get(source, 0) for source in sources])
-
-        if monotonic() - ts > 60 or len(self.heard_utts) == 0:
-            self.speak_dialog('did.not.hear')
-            self.speak_dialog('please.repeat', expect_response=True)
-        else:
-            utts = []
-            for source in sources:
-                utts += self.heard_utts.get(source, [])
-
-            if len(utts) < 2:
-                last_stt = self.translate('nothing')
-            else:
-                last_stt = utts[-2]  # last is current utt
-
-            self.speak_dialog('did.hear')
-            self.speak_dialog('repeat.stt', {"stt": last_stt})
+        sess = SessionManager.get(message)
+        if sess.session_id in self.parrot_sessions:
+            ts = self.parrot_sessions[sess.session_id]["stt_timestamp"]
+            utt = self.parrot_sessions[sess.session_id]["prev_stt"]
+            if ts > 0 and utt and monotonic() - ts < 60:  # less than 1 minute ago
+                self.speak_dialog('did.hear')
+                self.speak_dialog('repeat.stt', {"stt": utt})
+                return
+        self.speak_dialog('did.not.hear')
+        self.speak_dialog('please.repeat', expect_response=True)
 
     # continuous conversation
     @intent_handler("start_parrot.intent")
     def handle_start_parrot_intent(self, message):
-        self.parroting = True
-        self.speak_dialog("parrot_start", expect_response=True)
-        self.gui["running"] = False
-        self.gui.show_page("parrot.qml", override_idle=True)
+        sess = SessionManager.get(message)
+        if sess.session_id not in self.parrot_sessions:
+            self.parrot_sessions[sess.session_id] = {"current_stt": "",
+                                                     "parrot": False,
+                                                     "tts_timestamp": -1,
+                                                     "stt_timestamp": -1}
+
+        self.parrot_sessions[sess.session_id]["parrot"] = True
+        self.speak_dialog("parrot_start")
+        if sess.session_id == "default":
+            self.gui["running"] = True
+            self.gui.show_page("parrot.qml", override_idle=True)
+            # TODO - enable hybrid listening mode while parrot is on
 
     @intent_handler("stop_parrot.intent")
     def handle_stop_parrot_intent(self, message):
-        if self.parroting:
-            self.stop()
+        sess = SessionManager.get(message)
+        if sess.session_id in self.parrot_sessions and \
+                self.parrot_sessions[sess.session_id]["parrot"]:
+            self.stop_session(sess)
         else:
             self.speak_dialog("not_parroting")
 
-    def converse(self, utterances, lang="en-us"):
-        if self.parroting:
-            # check if stop intent will trigger
+    def converse(self, message):
+        utterances = message.data["utterances"]
+        sess = SessionManager.get(message)
+        if sess.session_id in self.parrot_sessions and \
+                self.parrot_sessions[sess.session_id]["parrot"]:
+
+            # check if stop intent
             if self.voc_match(utterances[0], "StopKeyword") and \
                     self.voc_match(utterances[0], "ParrotKeyword"):
-                return False
-            # if not parrot utterance back
-            self.speak(utterances[0], expect_response=True)
+                self.handle_stop_parrot_intent(message)
+            else:  # else parrot utterance back
+                self.speak(utterances[0])
             return True
-        else:
-            return False
+        return False
+
+    def handle_deactivate(self, message):
+        """
+        Called when this skill is no longer considered active by the intent
+        service; converse method will not be called until skill is active again.
+        """
+        sess = SessionManager.get(message)
+        self.stop_session(sess)
+
+    def stop_session(self, session: Session):
+        if session.session_id in self.parrot_sessions and\
+                self.parrot_sessions[session.session_id]["parrot"]:
+            self.parrot_sessions[session.session_id]["parrot"] = False
+            self.speak_dialog("parrot_stop")
+            if session.session_id == "default":
+                self.gui["running"] = False
+                self.gui.release()
 
     def stop(self):
-        if self.parroting:
-            self.parroting = False
-            self.speak_dialog("parrot_stop")
-            self.gui["running"] = False
-            self.gui.release()
+        sess = SessionManager.get()
+        if sess.session_id in self.parrot_sessions and \
+                self.parrot_sessions[sess.session_id]["parrot"]:
+            self.stop_session(sess)
             return True
         return False
