@@ -112,10 +112,11 @@ class ParrotSkill(OVOSSkill):
                                                      "stt_timestamp": -1}
 
         self.parrot_sessions[sess.session_id]["parrot"] = True
-        self.speak_dialog("parrot_start", expect_response=True)
+        self.speak_dialog("parrot_start")
         if sess.session_id == "default":
             self.gui["running"] = True
             self.gui.show_page("parrot.qml", override_idle=True)
+            # TODO - enable hybrid listening mode while parrot is on
 
     @intent_handler("stop_parrot.intent")
     def handle_stop_parrot_intent(self, message):
@@ -137,7 +138,7 @@ class ParrotSkill(OVOSSkill):
                 self.handle_stop_parrot_intent(message)
                 return True
             # if not parrot utterance back
-            self.speak(utterances[0], expect_response=True)
+            self.speak(utterances[0])
             return True
         return False
 
