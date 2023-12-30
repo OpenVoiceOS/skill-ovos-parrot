@@ -3,7 +3,7 @@ import os
 from setuptools import setup
 from os import walk, path
 
-URL = "https://github.com/JarbasSkills/skill-parrot"
+URL = "https://github.com/OpenVoiceOS/skill-ovos-parrot"
 SKILL_CLAZZ = "ParrotSkill"  # needs to match __init__.py class name
 PYPI_NAME = "ovos-skill-parrot"  # pip install PYPI_NAME
 
