@@ -33,21 +33,6 @@ jobs:
       - name: Install Build Tools
         run: |
           python -m pip install build wheel
-      - name: Install Translate Tools
-        run: |
-          python -m pip install git+https://github.com/NeonGeckoCom/neon-lang-plugin-google_translate
-      - name: Install OSM
-        run: |
-          pip install ovos-skills-manager~=0.0.10
-      - name: Migrate old location to "locale" folder
-        run: |
-          python scripts/migrate_locale.py
-      - name: Auto Translate
-        run: |
-          python scripts/translate.py
-      - name: Update Skill Store metadata
-        run: |
-          python scripts/prepare_skillstore.py
       - name: Increment Version
         run: |
           VER=$(python setup.py --version)
