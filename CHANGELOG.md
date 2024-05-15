@@ -1,5 +1,9 @@
 # Changelog
 
+## [V0.0.0](https://github.com/OpenVoiceOS/skill-ovos-parrot/tree/V0.0.0) (2023-12-31)
+
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-parrot/compare/V0.0.0a2...V0.0.0)
+
 ## [V0.0.0a2](https://github.com/OpenVoiceOS/skill-ovos-parrot/tree/V0.0.0a2) (2023-12-31)
 
 [Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-parrot/compare/v0.2.1...V0.0.0a2)
