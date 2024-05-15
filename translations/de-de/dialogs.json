@@ -1,0 +1,28 @@
+{
+    "did.hear.dialog": [
+        "ja."
+    ],
+    "did.not.hear.dialog": [
+        "Nein, ich glaube nicht, dass ich dich geh\u00f6rt habe",
+        "Nein, ich habe dich nicht geh\u00f6rt."
+    ],
+    "repeat.stt.old.dialog": [
+        "Das letzte was du gesagt hast war {stt}.",
+        "Vor einer Weile hast du gesagt: {stt}."
+    ],
+    "nothing.dialog": [
+        "nichts"
+    ],
+    "repeat.tts.dialog": [
+        "ich sagte nur, {tts}",
+        "ich sagte, {tts}"
+    ],
+    "please.repeat.dialog": [
+        "Kannst du das wiederholen?",
+        "Was hast du gesagt?"
+    ],
+    "repeat.stt.dialog": [
+        "Du hast einfach nur gesagt, {stt}.",
+        "Du sagtest, {stt}."
+    ]
+}
