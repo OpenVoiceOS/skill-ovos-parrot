@@ -1,0 +1,18 @@
+{
+  "StopKeyword.voc": [
+    "stop",
+    "basta",
+    "smetti",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]"
+  ],
+  "ParrotKeyword.voc": [
+    "registra",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]"
+  ]
+}
