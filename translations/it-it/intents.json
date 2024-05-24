@@ -1,0 +1,48 @@
+{
+  "repeat.tts.intent": [
+    "(che|) cosa hai (appena|) detto?",
+    "puoi ripetere?",
+    "ripeti",
+    "ridimmi",
+    "puoi dirlo di nuovo?",
+    "puoi ridirlo?",
+    "eh?",
+    "cosa?"
+  ],
+  "start_parrot.intent": [
+    "inizia a registrare",
+    "inizia il registramento",
+    "registra",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]"
+  ],
+  "stop_parrot.intent": [
+    "non registrare più",
+    "ferma la registrazione",
+    "smetti di registrare",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]",
+    "[UNUSED]"
+  ],
+  "repeat.stt.intent": [
+    "che cosa (ti|) ho detto?",
+    "ripeti cosa ho (appena) detto",
+    "cosa ho appena detto?",
+    "ripeti cosa hai sentito"
+  ],
+  "speak.intent": [
+    "ripeti {sentence}",
+    "di(mmi|) {sentence}"
+  ],
+  "did.you.hear.me.intent": [
+    "mi puoi sentire?"
+  ]
+}
