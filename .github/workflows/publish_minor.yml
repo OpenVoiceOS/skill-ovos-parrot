@@ -26,10 +26,6 @@ jobs:
         run: |
           VER=$(python setup.py --version)
           python scripts/remove_alpha.py
-      - name: Prepare Skillstore metadata
-        run: |
-          python scripts/prepare_skillstore.py
-          python scripts/release_skillstore.py
       - name: "Generate release changelog"
         uses: heinrichreimer/github-changelog-generator-action@v2.3
         with:
