@@ -1,11 +1,12 @@
 # Changelog
 
-## [Unreleased](https://github.com/OpenVoiceOS/skill-ovos-parrot/tree/HEAD)
+## [0.1.2a1](https://github.com/OpenVoiceOS/skill-ovos-parrot/tree/0.1.2a1) (2024-10-15)
 
-[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-parrot/compare/V0.0.1...HEAD)
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-parrot/compare/V0.0.1...0.1.2a1)
 
 **Merged pull requests:**
 
+- fix:long description [\#13](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/13) ([JarbasAl](https://github.com/JarbasAl))
 - fix:update\_requirements [\#12](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/12) ([JarbasAl](https://github.com/JarbasAl))
 - Add Catalan translation [\#11](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/11) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
 - Add Catalan translation [\#10](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/10) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
