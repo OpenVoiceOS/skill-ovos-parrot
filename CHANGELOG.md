@@ -1,16 +1,13 @@
 # Changelog
 
-## [0.1.2a1](https://github.com/OpenVoiceOS/skill-ovos-parrot/tree/0.1.2a1) (2024-10-15)
+## [0.1.3a1](https://github.com/OpenVoiceOS/skill-ovos-parrot/tree/0.1.3a1) (2024-11-01)
 
-[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-parrot/compare/V0.0.1...0.1.2a1)
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-parrot/compare/0.1.2...0.1.3a1)
 
 **Merged pull requests:**
 
-- fix:long description [\#13](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/13) ([JarbasAl](https://github.com/JarbasAl))
-- fix:update\_requirements [\#12](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/12) ([JarbasAl](https://github.com/JarbasAl))
-- Add Catalan translation [\#11](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/11) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
-- Add Catalan translation [\#10](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/10) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
-- Add Catalan translation [\#9](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/9) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
+- fix:allow workshop 2.0.0 [\#15](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/15) ([JarbasAl](https://github.com/JarbasAl))
+- added italian [\#7](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/7) ([gitlocalize-app[bot]](https://github.com/apps/gitlocalize-app))
 
 
 
