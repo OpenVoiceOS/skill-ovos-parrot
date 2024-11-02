@@ -1,0 +1,18 @@
+{
+  "StopKeyword.voc": [
+    "stop",
+    "koble fra",
+    "slukket",
+    "afbryde",
+    "offline",
+    "ophæve",
+    "deaktivere"
+  ],
+  "ParrotKeyword.voc": [
+    "papegøje",
+    "papegøje",
+    "gentager hvad jeg siger",
+    "gentage alt",
+    "gentager mig"
+  ]
+}

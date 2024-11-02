@@ -1,0 +1,11 @@
+(papegøje mode | papegøje ) frakoble
+(papegøje mode | papegøje ) stop
+(papegøjetilstand | papegøje ) annuller
+(papegøjetilstand | papegøje) afbryde
+(papegøjetilstand | papegøje) deaktiver
+afbryde (papegøjetilstand | papegøje)
+annuller (papegøjetilstand | papegøje)
+deaktiver (papegøjetilstand | papegøje)
+frakoble (papegøjetilstand | papegøje)
+stop (papegøjetilstand | papegøje)
+stop med at gentage mig
