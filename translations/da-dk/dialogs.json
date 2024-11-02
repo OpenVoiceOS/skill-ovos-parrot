@@ -1,0 +1,50 @@
+{
+  "did.hear.dialog": [
+    "Yeah.",
+    null
+  ],
+  "did.not.hear.dialog": [
+    null,
+    null
+  ],
+  "repeat.stt.old.dialog": [
+    null,
+    null
+  ],
+  "nothing.dialog": [
+    null
+  ],
+  "repeat.tts.dialog": [
+    null,
+    null
+  ],
+  "please.repeat.dialog": [
+    null,
+    null
+  ],
+  "parrot_stop.dialog": [
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "repeat.stt.dialog": [
+    null,
+    null
+  ],
+  "parrot_start.dialog": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "not_parroting.dialog": [
+    null
+  ]
+}
