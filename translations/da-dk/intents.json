@@ -1,0 +1,48 @@
+{
+  "repeat.tts.intent": [
+    "Hvad har du (bare|) (sagt|fortalt) (mig|)?",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "start_parrot.intent": [
+    "begynd at papegøje",
+    "aktiver papegøjetilstand",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "stop_parrot.intent": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "repeat.stt.intent": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "speak.intent": [
+    null,
+    null
+  ],
+  "did.you.hear.me.intent": [
+    null
+  ]
+}
