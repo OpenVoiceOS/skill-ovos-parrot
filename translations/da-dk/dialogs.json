@@ -1,50 +1,50 @@
 {
   "did.hear.dialog": [
     "Yeah.",
-    null
+    "Ja."
   ],
   "did.not.hear.dialog": [
-    null,
-    null
+    "Nej, jeg tror ikke, jeg hørte dig.",
+    "Nej, jeg hørte dig ikke."
   ],
   "repeat.stt.old.dialog": [
-    null,
-    null
+    "Det sidste du sagde var {stt}.",
+    "For et stykke tid siden sagde du, {stt}."
   ],
   "nothing.dialog": [
-    null
+    "intet"
   ],
   "repeat.tts.dialog": [
-    null,
-    null
+    "Jeg sagde lige, {tts}",
+    "Jeg sagde, {tts}"
   ],
   "please.repeat.dialog": [
-    null,
-    null
+    "Kan du gentage det?",
+    "Hvad sagde du?"
   ],
   "parrot_stop.dialog": [
-    null,
-    null,
-    null,
-    null,
-    null
+    "Papegøjetilstand deaktiveret",
+    "Papegøjetilstand deaktiveret",
+    "Papegøjetilstand deaktiveret",
+    "Papegøjetilstand deaktiveret",
+    "Jeg holder op med at gentage, hvad du siger"
   ],
   "repeat.stt.dialog": [
-    null,
-    null
+    "Du sagde lige, {stt}.",
+    "Du sagde, {stt}."
   ],
   "parrot_start.dialog": [
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null
+    "Papegøjetilstand aktiveret",
+    "Papegøjetilstand aktiveret",
+    "Papegøjetilstand slået til",
+    "Papegøjetilstand aktiveret",
+    "Det er godt at være papegøje",
+    "Jeg kan godt lide at være papegøje",
+    "Jeg vil gentage dig",
+    "Jeg er god til at gentage ting",
+    "Jeg er en papegøje"
   ],
   "not_parroting.dialog": [
-    null
+    "Jeg er ikke i papegøjetilstand"
   ]
 }
