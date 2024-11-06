@@ -65,7 +65,7 @@ class ParrotSkill(OVOSSkill):
         # replaces https://github.com/MatthewScholefield/skill-repeat-recent
         sess = SessionManager.get(message)
         if sess.session_id not in self.parrot_sessions:
-            utt = self.translate('nothing')
+            utt = self.resources.render_dialog('nothing')
         else:
             utt = self.parrot_sessions[sess.session_id]["prev_tts"]
 
@@ -76,7 +76,7 @@ class ParrotSkill(OVOSSkill):
         # replaces https://github.com/MatthewScholefield/skill-repeat-recent
         sess = SessionManager.get(message)
         if sess.session_id not in self.parrot_sessions:
-            utt = self.translate('nothing')
+            utt = self.resources.render_dialog('nothing')
             ts = 0
         else:
             utt = self.parrot_sessions[sess.session_id]["prev_stt"]
