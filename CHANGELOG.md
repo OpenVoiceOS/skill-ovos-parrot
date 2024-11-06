@@ -1,12 +1,12 @@
 # Changelog
 
-## [0.1.5a1](https://github.com/OpenVoiceOS/skill-ovos-parrot/tree/0.1.5a1) (2024-11-05)
+## [0.1.6a1](https://github.com/OpenVoiceOS/skill-ovos-parrot/tree/0.1.6a1) (2024-11-06)
 
-[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-parrot/compare/0.1.4...0.1.5a1)
+[Full Changelog](https://github.com/OpenVoiceOS/skill-ovos-parrot/compare/0.1.5...0.1.6a1)
 
 **Merged pull requests:**
 
-- fix:allow workshop 2.0.0 [\#19](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/19) ([JarbasAl](https://github.com/JarbasAl))
+- fix: usage\_of\_deprecated\_method [\#21](https://github.com/OpenVoiceOS/skill-ovos-parrot/pull/21) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
