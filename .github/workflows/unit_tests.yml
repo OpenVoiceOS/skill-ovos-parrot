@@ -60,13 +60,10 @@ jobs:
           sudo apt install libfann-dev
       - name: Install ovos dependencies
         run: |
-          pip install ovos-plugin-manager ovos-core[skills_lgpl]~=0.0.2a11
+          pip install ovos-plugin-manager
       - name: Run unittests
         run: |
-          pytest --cov=ovos-skill-template-repo --cov-report xml test/unittests
-          # NOTE: additional pytest invocations should also add the --cov-append flag
-          #       or they will overwrite previous invocations' coverage reports
-          #       (for an example, see OVOS Skill Manager's workflow)
+          pytest --cov=ovos-skill-parrot --cov-report xml test
       - name: Upload coverage
         env:
           CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
