@@ -1,50 +1,50 @@
 {
   "did.hear.dialog": [
-    "Si",
-    "Certo"
+    "Sì.",
+    "Certo."
   ],
   "did.not.hear.dialog": [
-    "No, non ho capito",
-    "No"
+    "No, non credo di averti sentito.",
+    "No, non ti ho sentito."
   ],
   "repeat.stt.old.dialog": [
-    "L'ultima cosa che hai detto é stato {stt}",
-    "hai detto {stt}"
+    "L'ultima cosa che hai detto è stata {stt}.",
+    "Qualche tempo fa hai detto {stt}."
   ],
   "nothing.dialog": [
     "niente"
   ],
   "repeat.tts.dialog": [
-    "ho appena detto {tts}",
-    "ti ho detto {tts}"
+    "Ho appena detto {tts}",
+    "Ti ho detto {tts}"
   ],
   "please.repeat.dialog": [
-    "puoi ripetere?",
-    "cosa hai detto?"
+    "Puoi ripetere?",
+    "Cosa hai detto?"
   ],
   "parrot_stop.dialog": [
-    "ho spento la registrazione",
-    "ho smesso di registrare",
-    "[UNUSED]",
-    "[UNUSED]",
-    "[UNUSED]"
+    "Ho terminato di ripetere come un pappagallo",
+    "Ho smesso di ripetere come un pappagallo",
+    "Non sto più ripetendo come un pappagallo",
+    "Modalità pappagallo disabilitata",
+    "Smetterò di ripetere cosa mi stai dicendo"
   ],
   "repeat.stt.dialog": [
-    "hai appena detto {stt}.",
-    "hai detto {stt}."
+    "Hai appena detto {stt}.",
+    "Hai detto {stt}."
   ],
   "parrot_start.dialog": [
-    "inizio a registrare",
-    "ok, sto registrando",
-    "[UNUSED]",
-    "[UNUSED]",
-    "[UNUSED]",
-    "[UNUSED]",
-    "[UNUSED]",
-    "[UNUSED]",
-    "[UNUSED]"
+    "Inizio a ripetere come un pappagallo",
+    "Incomincio a ripetere come un pappagallo",
+    "Ora posso ripetere come un pappagallo",
+    "Modalità pappagallo attivata",
+    "È bello essere un pappagallo",
+    "Mi piace essere un pappagallo",
+    "Ripeterò quello che dici",
+    "Sono bravo a ripetere le cose",
+    "Sono un pappagallo"
   ],
   "not_parroting.dialog": [
-    "no, non sto registrando"
+    "Non sono in modalità pappagallo"
   ]
 }
