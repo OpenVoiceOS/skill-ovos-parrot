@@ -3,16 +3,16 @@
     "stop",
     "basta",
     "smetti",
-    "[UNUSED]",
-    "[UNUSED]",
-    "[UNUSED]",
-    "[UNUSED]"
+    "termina",
+    "non in linea",
+    "cancella",
+    "disabilita"
   ],
   "ParrotKeyword.voc": [
-    "registra",
-    "[UNUSED]",
-    "[UNUSED]",
-    "[UNUSED]",
-    "[UNUSED]"
+    "ripetere a pappagallo",
+    "ripetere a pappagallo",
+    "sto ripetendo quello che dico",
+    "sto ripetendo tutto",
+    "mi ripeto da solo"
   ]
 }
