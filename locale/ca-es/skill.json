@@ -1,0 +1,24 @@
+{
+  "skill_id": "skill-ovos-parrot.openvoiceos",
+  "source": "https://github.com/OpenVoiceOS/skill-ovos-parrot",
+  "name": "Lloro",
+  "description": "Converteix OpenVoiceOS en un lloro! Feu que OVOS repeteixi tot el que vulgueu.",
+  "examples": [
+    "digues bona nit, Graciela",
+    "repeteix Hi havia una nit trista, mentre jo reflexionava, dèbil i cansat, sobre molts volums pintorescs i curiosos de tradicions oblidades.",
+    "Parla, puc dir el que vulguis!",
+    "Repeteix el que acabo de dir",
+    "Repeteix això",
+    "Pots repetir això?",
+    "Què acabo de dir?",
+    "Digues-me el que acabo de dir.",
+    "comença el lloro",
+    "para el lloro"
+  ],
+  "tags": [
+    "lloro",
+    "eco",
+    "repetidor",
+    "entreteniment"
+  ]
+}
