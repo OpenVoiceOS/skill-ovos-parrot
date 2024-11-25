@@ -1,0 +1,24 @@
+{
+  "skill_id": "skill-ovos-parrot.openvoiceos",
+  "source": "https://github.com/OpenVoiceOS/skill-ovos-parrot",
+  "name": "Papegøje",
+  "description": "Gør OpenVoiceOS til en ekko papegøje! Få OVOS til at gentage, hvad du vil.",
+  "examples": [
+    "Sig godnat, Gracie",
+    "gentag Engang en midnat trist, mens jeg grublede, svag og træt, over mange en særegne og mærkværdige mængde glemt historie",
+    "tal jeg kan sige hvad du vil!",
+    "Gentag, hvad du lige sagde",
+    "Gentag det",
+    "Kan du gentage det?",
+    "Hvad sagde jeg lige?",
+    "Fortæl mig, hvad jeg lige sagde.",
+    "start papegøje",
+    "stop papegøje"
+  ],
+  "tags": [
+    "papegøje",
+    "ekko",
+    "repeater",
+    "underholdning"
+  ]
+}
