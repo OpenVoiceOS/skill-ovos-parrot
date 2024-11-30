@@ -1,0 +1,24 @@
+{
+  "skill_id": "skill-ovos-parrot.openvoiceos",
+  "source": "https://github.com/OpenVoiceOS/skill-ovos-parrot",
+  "name": "Papagei",
+  "description": "Mache OpenVoiceOS zu einem Echo-Papagei! Lasse OVOS alles wiederholen, was Du willst",
+  "examples": [
+    "sage gute Nacht, Gracie",
+    "Wiederhole einmal eine trostlose Mitternacht, während ich, schwach und müde, über viele kuriose und merkwürdige Bände vergessener Überlieferungen nachdachte",
+    "spreche Ich kann alles sagen, was Du möchtest!",
+    "Wiederhole, was Du gerade gesagt hast",
+    "Wiederhole das",
+    "Kannst Du das wiederholen?",
+    "Was habe ich gerade gesagt?",
+    "Sag mir, was ich gerade gesagt habe.",
+    "Papagei starten\nstarte Papagei",
+    "Papagei stoppen\nstoppe Papagei"
+  ],
+  "tags": [
+    "Papagei",
+    "Echo",
+    "Wiederholung",
+    "Unterhaltung"
+  ]
+}
