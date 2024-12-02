@@ -1,12 +1,12 @@
 # Changelog
 
-## [0.1.13a1](https://github.com/OpenVoiceOS/ovos-skill-parrot/tree/0.1.13a1) (2024-12-02)
+## [0.1.14a1](https://github.com/OpenVoiceOS/ovos-skill-parrot/tree/0.1.14a1) (2024-12-02)
 
-[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-parrot/compare/0.1.12...0.1.13a1)
+[Full Changelog](https://github.com/OpenVoiceOS/ovos-skill-parrot/compare/0.1.13...0.1.14a1)
 
 **Merged pull requests:**
 
-- import galician translations [\#37](https://github.com/OpenVoiceOS/ovos-skill-parrot/pull/37) ([JarbasAl](https://github.com/JarbasAl))
+- import basque translations [\#39](https://github.com/OpenVoiceOS/ovos-skill-parrot/pull/39) ([JarbasAl](https://github.com/JarbasAl))
 
 
 
